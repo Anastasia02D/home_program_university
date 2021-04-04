@@ -1,0 +1,19 @@
+all: clear proga del_o
+
+clear:
+	clear
+
+proga: 17.o 17_f.o malloc.o
+	/home/ubuntu/nastya/wgcc -o proga 17.o 17_f.o malloc.o
+
+17.o: 17.c
+	 /home/ubuntu/nastya/wgcc -c 17.c
+
+17_f.o: 17_f.c
+	 /home/ubuntu/nastya/wgcc -c 17_f.c
+
+malloc.o: malloc.c
+	/home/ubuntu/nastya/wgcc -c malloc.c
+
+del_o:
+	rm *.o
