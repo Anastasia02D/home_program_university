@@ -1,21 +1,21 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[6]:
-
+# In[1]:
 import math
 import os
+import f
 
-def read_f(f):    
+def read_f(f):
     arr = [];
     if (os.path.exists(f)):
         with open(f) as file: 
             for line in file:
                 for x in line.split (' '): 
                     if x != "":
-                        try:
+                        if x.isdigit():
                             arr.append(int(x))
-                        except ValueError:   
+                        else:
                             return arr, -2
     else:
         return arr, -1
@@ -24,7 +24,7 @@ def read_f(f):
     return arr, 0
 
 
-# In[7]:
+# In[2]:
 
 
 def add(arr, begin, i):
@@ -37,15 +37,13 @@ def add(arr, begin, i):
     return arr, begin, i
 
 
-# In[8]:
+# In[3]:
 
 
 def f_ins(arr):
-    #print ("!", len(arr))
     i = 1
     begin = 0
     while i < len(arr):
-        #print (i)
         if arr[i - 1] >= arr[i]:
             arr, begin, i = add(arr, begin, i)
             begin = i
