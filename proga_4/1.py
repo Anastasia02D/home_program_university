@@ -1,77 +1,76 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[10]:
+# In[9]:
 
 
 import math
 import os
 
 
-# In[ ]:
+# In[20]:
 
 
-
-
-
-# In[11]:
-
-
-def read_f():
+def read_f(f = '1.txt'):
     """
+    >>> g=open("5.txt","w")
+    >>> u=g.write("")
+    >>> g.close()
+    >>> read_f("5.txt")
+    -3
     >>> g=open("2.txt","w")
-    >>> u=g.write(" ")
+    >>> u=g.write("1 2 2 -3")
     >>> g.close()
-    >>> read_f()
-
+    >>> read_f("2.txt")
+    0
     >>> g=open("3.txt","w")
-    >>> u=g.write(" ")
+    >>> u=g.write(" 1 1 1")
     >>> g.close()
-    >>> read_f()
-    
-    >>> g=open("3.txt","w")
-    >>> u=g.write(" ")
+    >>> read_f("3.txt")
+    0
+    >>> g=open("4.txt","w")
+    >>> u=g.write("1 2 a")
     >>> g.close()
-    >>> read_f()
-    
-    >>> g=open("3.txt","w")
-    >>> u=g.write(" ")
-    >>> g.close()
-    >>> read_f()
+    >>> read_f("4.txt")
+    -2
     """
     k=0
     i=0
-    if (os.path.exists('1.txt')):
-        with open("1.txt") as file:
+    if (os.path.exists(f)):
+        with open(f) as file:
             for line in file:
                 for x in line.split (' '): 
                     if x != "":
-                        i += 1
-                        if x.isdigit():
+                        try:
                             x = int(x)
-                            #print (x)
-                            if k == 0:
-                                pred = x
-                                k += 1
-                            else:
-                                if pred == x:
-                                    k += 1
-                                    if k >= 3:
-                                        return i-1
+                            k+=1
+                            if i == 0:
+                                x1 = x
+                                i += 1
+                            elif (i == 1) and (x1 != x):
+                                x2 = x
+                                i += 1
+                            elif (i >= 2) and (x2 != x):
+                                x3 = x
+                                if (x1 < x2 < x3) or (x1 > x2 > x3):
+                                    return k-1
                                 else:
-                                    k = 1
-                                    pred = x
-                            #print(k)
-                        else:
-                            return -2                              
+                                    x1 = x2
+                                    x2 = x3
+                                    i += 1
+                        except ValueError:   
+                            return -2
+                                
     else:
         return -1
     if i == 0:
         return -3
+#    if (i == 2) and (k == 2):
+#        return 2
     return 0
 
 
-# In[12]:
+# In[21]:
 
 
 err = read_f()
@@ -87,7 +86,7 @@ else:
     print (err)
 
 
-# In[13]:
+# In[22]:
 
 
 import doctest
