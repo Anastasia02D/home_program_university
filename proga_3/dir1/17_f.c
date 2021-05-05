@@ -62,6 +62,7 @@ int get_int(char *s, int *x){
 void clear(int **arr, int end){
 	for (int i = 0; i <= end; i++)
 		free(arr[i]);
+	free (arr);
 }
 
 void print (int **arr, int k){
