@@ -3,9 +3,9 @@
 int **f_read(int *err, int *k_str){
 	int **arr = NULL;
 	FILE *file = fopen("1.txt" ,"r");
-	char str[256];
+	char str[256], str_2[256];
 	char *estr;
-	int i, sum = 0, x, pos; 
+	int i, sum = 0, x, pos,len; 
 //	printf("@");
 	if (file == 0){
 		printf ("!");
@@ -22,9 +22,14 @@ int **f_read(int *err, int *k_str){
 		printf("%s!\n",str);
 */		if (estr !=  NULL){
 //		if (estr !=  NULL || str == "\n"){
+			while (str[strlen(str)-1] != '\n' && !feof(file)) {
+                                estr = fgets(str_2, 256, file);
+                                memcpy(str, str_2, strlen(str_2));
+			}
 //			printf("bef");
 			(*k_str)++;
 			arr = (int**)realloc(arr, sizeof(int*)*((*k_str) + 1));
+			arr [(*k_str)] = NULL;
 			sum = 0;
 			i = 0;
 			while (pos = get_int(str+sum, &x), pos > 0){
