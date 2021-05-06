@@ -1,57 +1,74 @@
 #include "fun.h"
+#define N 256
 
 int **f_read(int *err, int *k_str){
 	int **arr = NULL;
 	FILE *file = fopen("1.txt" ,"r");
-	char str[256], str_2[256];
+	char *str = NULL, str_2[N];
 	char *estr;
-	int i, sum = 0, x, pos,len; 
+	int i, sum = 0, x, pos,len,j;
+	unsigned long int n;
 //	printf("@");
 	if (file == 0){
-		printf ("!");
+//		printf ("!");
 		(*err) = -1;
 		return arr;
 	}
-	while (!feof(file)){
-		estr = fgets(str, 256, file);
-//		printf("!%s!!%s!!!\n", estr, str);
-/*		if (str == "\n")
-			printf("A\n");
-		else
-			printf("neA\n");
-		printf("%s!\n",str);
-*/		if (estr !=  NULL){
-//		if (estr !=  NULL || str == "\n"){
-			while (str[strlen(str)-1] != '\n' && !feof(file)) {
-                                estr = fgets(str_2, 256, file);
-                                memcpy(str, str_2, strlen(str_2));
-			}
-//			printf("bef");
-			(*k_str)++;
-			arr = (int**)realloc(arr, sizeof(int*)*((*k_str) + 1));
-			arr [(*k_str)] = NULL;
-			sum = 0;
-			i = 0;
-			while (pos = get_int(str+sum, &x), pos > 0){
-				i++;
-				sum = sum + pos;
-				arr[(*k_str)] = (int*)realloc(arr[(*k_str)], sizeof(int)*(i+1));
-				arr[(*k_str)][i] = x;
-			}
-			if (pos == -1){
-				clear(arr, (*k_str));
-				fclose(file);
-				(*err) = -2;
-				return arr;
-			}
-			if (i == 0)
-				 arr[(*k_str)] = (int*)realloc(arr[(*k_str)], sizeof(int));
-			arr[(*k_str)][0] = i;
+	n = N;
+	while (mygets(&str,&n , file)){
+	//	printf("!!!\n");
+		(*k_str)++;
+		arr = (int**)realloc(arr, sizeof(int*)*((*k_str) + 1));
+		arr [(*k_str)] = NULL;
+		sum = 0;
+		i = 0;
+	//	printf("%s!\n", str);
+		while (pos = get_int(str+sum, &x), pos > 0){
+		//	printf("*%d* ", x);
+			i++;
+			sum = sum + pos;
+			arr[(*k_str)] = (int*)realloc(arr[(*k_str)], sizeof(int)*(i+1));
+			arr[(*k_str)][i] = x;
 		}
+//		printf("\n");
+
+		if (pos == -1){
+			clear(arr, (*k_str));
+			fclose(file);
+			(*err) = -2;
+			free(str);
+			return arr;
+		}
+		if (i == 0){
+			arr[(*k_str)] = (int*)realloc(arr[(*k_str)], sizeof(int));
+			arr[(*k_str)][0] = 0;
+		}
+		arr[(*k_str)][0] = i;
+		free (str);
+		str = NULL;
 	}
 	fclose (file);
 	(*err) = 0;
 	return arr;
+}
+
+char *mygets(char **str, unsigned long int *LMax, FILE *in){
+	int begin=0; 
+	if(!*str)
+		*str=(char *)malloc(*LMax); 
+	while(fgets(*str+begin,*LMax-begin,in)){
+		begin=*LMax-1; 
+		if(strchr(*str,'\n'))
+			break;
+		(*LMax)*=2;
+		(*str)=(char *)realloc(*str,*LMax);
+       	}
+	if(begin==0){
+ 		free(*str);
+		return NULL;
+	}
+	return *str;
+
 }
 
 

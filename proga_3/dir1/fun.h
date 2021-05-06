@@ -9,3 +9,4 @@ void clear(int **arr, int end);
 void print (int **arr, int k);
 void del (int **arr, int k_str, int a);
 int proga(int **arr, int k_str);
+char *mygets(char **str, unsigned long int *LMax, FILE *in);
