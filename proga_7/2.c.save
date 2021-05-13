@@ -1,0 +1,25 @@
+#include "fun.h"
+
+struct student{
+	char *name;
+	int group;
+	float rating;
+};
+
+int main (void){
+	struct student s;
+	int err;
+	FILE *file1 = fopen("input.txt", "w");
+	if (file1 == NULL){
+		printf ("Not file1\n");
+		return 0;
+	}
+	err = Input (file1, &s);
+	fclose(file1);
+	if (err == -1)
+		printf("ERROR\n");
+	else
+		printf ("%s %d %f\n", s.name, s.group, s.rating);
+	return 0;
+}
+
