@@ -1,0 +1,27 @@
+#include "fun.h"
+
+int main (void){
+        spisok **arr = NULL;
+	int k_str = -1;
+        int err, k;
+        arr = f_read(&err, &k_str);
+	switch (err){
+                case -1:
+                        printf ("NOT FILE\n");
+                        return 0;
+                        break;
+                case -2:
+                        printf ("BAD DATA\n");
+                        return 0;
+                        break;
+                case 0:
+                        print (arr, k_str);
+                        break;
+        }
+	k = proga (arr, k_str);
+        printf("\n");
+        print(arr, k);
+
+	clear (arr, k);
+	return 0;
+}
